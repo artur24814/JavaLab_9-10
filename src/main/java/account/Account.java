@@ -2,7 +2,9 @@ package account;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+
 import account.AmountBelowZeroException;
+import account.NotEnoughMoneyException;
 
 @Getter
 @Setter
@@ -12,7 +14,7 @@ public class Account {
     private int balance;
     private String accountNumber;
 
-    public int transfer (Account targetAccount, int amount) throws AmountBelowZeroException {
+    public int transfer (Account targetAccount, int amount) throws AmountBelowZeroException, NotEnoughMoneyException {
         if (amount < 0 ){
             throw new AmountBelowZeroException("The amount must be greater than zero.");
         }
@@ -21,7 +23,10 @@ public class Account {
         return this.getBalance();
     }
 
-    public int withdraw(int amount) {
+    public int withdraw(int amount) throws NotEnoughMoneyException {
+        if (this.balance < amount) {
+            throw new NotEnoughMoneyException("You don't have enough money");
+        }
         this.balance -= amount;
         return this.getBalance();
     }

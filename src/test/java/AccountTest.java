@@ -1,5 +1,4 @@
-import account.Account;
-import account.AmountBelowZeroException;
+import account.*;
 
 import exceptionsGen.NullPointerExceptionGenerator;
 import org.junit.jupiter.api.Test;
@@ -8,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AccountTest {
 
     @Test
-    public void testValidTransfer() throws AmountBelowZeroException {
+    public void testValidTransfer() throws AmountBelowZeroException, NotEnoughMoneyException {
         Account sourceAccount = new Account("Jan Kowalski", 1000, "12345");
         Account targetAccount = new Account("Anna Nowak", 500, "67890");
 
@@ -25,5 +24,12 @@ public class AccountTest {
         Account targetAccount = new Account("Anna Nowak", 500, "67890");
 
         assertThrows(AmountBelowZeroException.class, () -> sourceAccount.transfer(targetAccount, -200));
+    }
+
+    @Test
+    public void testWithdrawWhenBalanceIsTooSmall() throws NotEnoughMoneyException{
+        Account account = new Account("Jan Kowalski", 100, "12345");
+
+        assertThrows(NotEnoughMoneyException.class, () -> account.withdraw(200));
     }
 }
