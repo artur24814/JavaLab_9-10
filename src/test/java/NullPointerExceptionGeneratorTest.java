@@ -1,5 +1,5 @@
 import org.junit.jupiter.api.Test;
-import exeptionsGens.NullPointerExceptionGenerator;
+import exceptionsGen.NullPointerExceptionGenerator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
