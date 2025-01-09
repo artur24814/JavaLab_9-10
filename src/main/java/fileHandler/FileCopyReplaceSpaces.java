@@ -27,7 +27,6 @@ public class FileCopyReplaceSpaces {
             System.err.println("Error: " + ioe.getMessage());
             ioe.printStackTrace();
         }
-
         return false;
     }
 }
