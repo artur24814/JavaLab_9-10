@@ -1,8 +1,11 @@
 import exceptionsGen.NullPointerExceptionGenerator;
 import account.*;
+import fileHandler.*;
+
+import java.io.IOException;
 
 public class App {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         try {
             NullPointerExceptionGenerator.raiseNullPointerException();
         } catch (NullPointerException e){
@@ -25,5 +28,15 @@ public class App {
             System.out.println("Stan konta nadawcy: " + senderAccount.getBalance());
             System.out.println("Stan konta odbiorcy: " + receiverAccount.getBalance());
         }
+
+        String INPUT_FILE = "InputFile.txt";
+        String OUTPUT_FILE = "OutputFile.txt";
+
+        FileFactory.createFileIfNotExists(INPUT_FILE, "Vistula vistula vistula Vistula.");
+        FileFactory.createFileIfNotExists(OUTPUT_FILE);
+
+        FileCopyReplaceSpaces fileHandler = new FileCopyReplaceSpaces(INPUT_FILE, OUTPUT_FILE);
+
+        boolean result = fileHandler.replaceSpaces(" ", "-");
     }
 }
