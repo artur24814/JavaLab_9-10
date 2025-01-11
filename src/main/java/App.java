@@ -1,8 +1,11 @@
 import exceptionsGen.NullPointerExceptionGenerator;
 import account.*;
 import fileHandler.*;
+import bankDetails.*;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) throws IOException {
@@ -29,6 +32,8 @@ public class App {
             System.out.println("Stan konta odbiorcy: " + receiverAccount.getBalance());
         }
 
+        System.out.println("Operacje z plikami ----------------------------");
+
         String INPUT_FILE = "InputFile.txt";
         String OUTPUT_FILE = "OutputFile.txt";
 
@@ -37,6 +42,28 @@ public class App {
 
         FileCopyReplaceSpaces fileHandler = new FileCopyReplaceSpaces(INPUT_FILE, OUTPUT_FILE);
 
-        boolean result = fileHandler.replaceSpaces(" ", "-");
+        fileHandler.replaceSpaces(" ", "-");
+
+        System.out.println("Wyszykiwania banków ----------------------------");
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Podaj trzy pierwsze cyfry numeru konta:");
+        String bankCode = scanner.nextLine();
+
+        if (bankCode.length() != 3 || !bankCode.matches("\\d{3}")) {
+            System.err.println("Wprowadź dokładnie trzy cyfry.");
+            return;
+        }
+
+        List<BankDetails> banks = BankFilter.filterBanksByBankCode(bankCode);
+        if (banks == null){
+            System.err.println("Nie znaleziono banku dla podanego kodu: " + bankCode);
+            return;
+        }
+        System.out.println("Znalezione banki:");
+        for (BankDetails bank : banks) {
+            System.out.println(bank);
+        }
     }
 }
